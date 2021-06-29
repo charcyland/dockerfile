@@ -3,7 +3,7 @@ FROM docker.io/library/alpine:3.14.0
 ARG nginx_path /etc/nginx
 ARG nginx_conf ${nginx_path}/nginx.conf
 
-RUN apk add --no-cache nginx supervisor
+RUN apk add --no-cache nginx supervisor wget
 
 RUN mkdir -p /opt/nginx/conf.d
 RUN mkdir /opt/nginx/certs
