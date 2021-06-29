@@ -1,16 +1,13 @@
-FROM docker.io/library/alpine:3.14.0
+FROM docker.io/library/alpine:latest
 
-ARG nginx_path /etc/nginx
-ARG nginx_conf ${nginx_path}/nginx.conf
-
-RUN apk add --no-cache nginx supervisor wget
+RUN apk add --no-cache wget supervisor nginx 
 
 RUN mkdir -p /opt/nginx/conf.d
 RUN mkdir /opt/nginx/certs
 RUN mkdir /opt/nginx/html
 
-RUN echo "daemon off;" >> ${nginx_conf}
-RUN sed -i -e "100a\    include /opt/nginx/conf.d/*.conf" ${nginx_conf}
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+RUN sed -i -e "103a\        include /opt/nginx/conf.d/*.conf;" /etc/nginx/nginx.conf
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
@@ -32,4 +29,3 @@ VOLUME ["/opt/nginx"]
 
 WORKDIR /
 ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]
-
