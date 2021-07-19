@@ -22,8 +22,8 @@ RUN mv /tmp/supervisord.conf /etc/supervisord.conf
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
 	ln -sf /dev/stderr /var/log/nginx/error.log
 
-EXPOSE 80
-EXPOSE 443
+EXPOSE 80/tcp
+EXPOSE 443/tcp
 
 VOLUME ["/opt/nginx"]
 
